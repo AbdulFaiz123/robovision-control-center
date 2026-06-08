@@ -6,4 +6,5 @@ export interface RobotTelemetry {
     battery: number; // percentage
     temperature: number; // in Celsius
     jointAngles: number[]; // in degrees
+    timestamp: string; // Unix timestamp
 }

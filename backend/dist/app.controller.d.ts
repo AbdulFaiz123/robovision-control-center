@@ -1,4 +1,7 @@
+import { RobotSimulatorService } from './robot/robot-simulator.service';
 export declare class AppController {
+    private readonly robotSimulatorService;
+    constructor(robotSimulatorService: RobotSimulatorService);
     getHome(): {
         message: string;
     };
@@ -7,11 +10,5 @@ export declare class AppController {
         service: string;
         timestamp: string;
     };
-    getRobotStatus(): {
-        robotId: string;
-        status: string;
-        battery: number;
-        temperature: number;
-        jointAngles: number[];
-    };
+    getRobotStatus(): import("./robot/robot.types").RobotTelemetry;
 }

@@ -10,6 +10,8 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const robot_simulator_service_1 = require("./robot/robot-simulator.service");
+const robot_gateway_1 = require("./robot/robot.gateway");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -17,7 +19,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, robot_simulator_service_1.RobotSimulatorService, robot_gateway_1.RobotGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

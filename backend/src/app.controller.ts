@@ -1,7 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
+import { RobotSimulatorService } from './robot/robot-simulator.service';
 
 @Controller()
 export class AppController {
+  constructor(private readonly robotSimulatorService: RobotSimulatorService) { }
   @Get()
   getHome() {
     return {
@@ -20,12 +22,6 @@ export class AppController {
 
   @Get('robots/status')
   getRobotStatus() {
-    return {
-      robotId: 'MAIRA-SIM-01',
-      status: 'IDLE',
-      battery: 87,
-      temperature: 42,
-      jointAngles: [10, 20, 30, 40, 50, 60],
-    };
+    return this.robotSimulatorService.getCurrentTelemetry();
   }
 }

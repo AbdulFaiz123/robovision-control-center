@@ -17,7 +17,10 @@ export function TelemetryPanel() {
                     label="Joint Angles"
                     value={telemetry.jointAngles.join(', ')}
                 />
-            </div>
+                <TelemetryCard
+                    label="Last Update"
+                    value={formatTimestamp(telemetry.timestamp)}
+                />            </div>
         </div>
     );
 }
@@ -29,4 +32,14 @@ function TelemetryCard({ label, value }: { label: string; value: string }) {
             <p className="text-lg font-semibold">{value}</p>
         </div>
     );
+}
+
+function formatTimestamp(timestamp: string) {
+    if (timestamp === 'Not connected') {
+        return timestamp;
+    }
+
+    return new Date(timestamp).toLocaleTimeString('en-GB', {
+        hour12: false,
+    });
 }

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { RobotStatus, RobotTelemetry } from '../types/robot';
+import type { RobotStatus, RobotTelemetry } from '@/types/robot';
 
 function createLog(message: string) {
     const time = new Date().toLocaleTimeString('en-GB', {
@@ -10,17 +10,13 @@ function createLog(message: string) {
 }
 
 type RobotStore = {
-    telemetry: RobotTelemetry
+    telemetry: RobotTelemetry;
     logs: string[];
     setTelemetry: (telemetry: RobotTelemetry) => void;
     setStatus: (status: RobotStatus) => void;
-    moveJoint: (jointIndex: number, angle: number) => void;
+    moveJoint: (jointIndex: number, delta: number) => void;
     addLog: (message: string) => void;
 };
-const initialLogs = [
-    '[system] Dashboard initialized',
-    '[system] Robot simulator ready',
-];
 
 const initialTelemetry: RobotTelemetry = {
     robotId: 'MAIRA-SIM-01',
@@ -28,7 +24,13 @@ const initialTelemetry: RobotTelemetry = {
     battery: 87,
     temperature: 42,
     jointAngles: [10, 20, 30, 40, 50, 60],
+    timestamp: 'Not connected',
 };
+
+const initialLogs = [
+    '[system] Dashboard initialized',
+    '[system] Waiting for telemetry stream',
+];
 
 export const useRobotStore = create<RobotStore>((set) => ({
     telemetry: initialTelemetry,
@@ -45,7 +47,10 @@ export const useRobotStore = create<RobotStore>((set) => ({
                 ...state.telemetry,
                 status,
             },
-            logs: [createLog(`Status changed to ${status}`), ...state.logs].slice(0, 8),
+            logs: [createLog(`Status changed locally to ${status}`), ...state.logs].slice(
+                0,
+                8
+            ),
         })),
 
     moveJoint: (jointIndex, delta) =>
@@ -60,7 +65,7 @@ export const useRobotStore = create<RobotStore>((set) => ({
                     jointAngles: updatedJointAngles,
                 },
                 logs: [
-                    createLog(`Joint ${jointIndex + 1} moved by ${delta}°`),
+                    createLog(`Joint ${jointIndex + 1} moved locally by ${delta}°`),
                     ...state.logs,
                 ].slice(0, 8),
             };
@@ -71,5 +76,3 @@ export const useRobotStore = create<RobotStore>((set) => ({
             logs: [createLog(message), ...state.logs].slice(0, 8),
         })),
 }));
-
-

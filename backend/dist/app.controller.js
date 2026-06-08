@@ -11,7 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
+const robot_simulator_service_1 = require("./robot/robot-simulator.service");
 let AppController = class AppController {
+    robotSimulatorService;
+    constructor(robotSimulatorService) {
+        this.robotSimulatorService = robotSimulatorService;
+    }
     getHome() {
         return {
             message: 'RoboVision backend is running',
@@ -25,13 +30,7 @@ let AppController = class AppController {
         };
     }
     getRobotStatus() {
-        return {
-            robotId: 'MAIRA-SIM-01',
-            status: 'IDLE',
-            battery: 87,
-            temperature: 42,
-            jointAngles: [10, 20, 30, 40, 50, 60],
-        };
+        return this.robotSimulatorService.getCurrentTelemetry();
     }
 };
 exports.AppController = AppController;
@@ -54,6 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getRobotStatus", null);
 exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)()
+    (0, common_1.Controller)(),
+    __metadata("design:paramtypes", [robot_simulator_service_1.RobotSimulatorService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

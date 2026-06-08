@@ -2,10 +2,12 @@ import { ControlPanel } from "@/components/ControlPanel";
 import { RobotScene } from "@/components/RobotScene";
 import { TelemetryPanel } from "@/components/TelemetryPanel";
 import { LogPanel } from "@/components/LogPanel";
+import { TelemetryConnector } from "@/components/TelemetryConnector";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6">
+      <TelemetryConnector />
       <section className="mb-6">
         <p className="text-sm text-slate-400">NEURA-inspired demo project</p>
         <h1 className="text-3xl font-bold">RoboVision Control Center</h1>
